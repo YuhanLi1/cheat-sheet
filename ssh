@@ -1,0 +1,45 @@
+Install the Open SSH Server and Open SSH Client with the command :
+# sudo apt-get install openssh-server openssh-client
+
+Generate Public and Private Key Pairs with the following command. The terminal will prompt for entering the file name. Press ENTER and proceed. After that copy the public keys form id_rsa.pub to authorized_keys.
+Set public/private key:
+$ ssh-keygen -t rsa
+$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
+
+Copy id to target:
+$ ssh-copy-id -i /.ssh/id_rsa.pub [node1]
+
+$ hostname
+
+Verify the password-less ssh configuration with the command :
+$ ssh localhost
+
+
+Hadoop
+Download(1 first) and extract Hadoop 2.8.5 from Apache official website.
+# tar -xzvf hadoop-2.8.5.tar.gz
+
+Edit the bashrc for the Hadoop user via setting up the following Hadoop environment variables :
+$ export HADOOP_HOME=/home/hadoop/hadoop-2.8.5 export HADOOP_INSTALL=$HADOOP_HOME export HADOOP_MAPRED_HOME=$HADOOP_HOME export HADOOP_COMMON_HOME=$HADOOP_HOME export HADOOP_HDFS_HOME=$HADOOP_HOME export YARN_HOME=$HADOOP_HOME export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
+
+Source the .bashrc in current login session.
+$ source ~/.bashrc
+
+zookeper
+
+$ wget https://www-us.apache.org/dist/zookeeper/stable/zookeeper-3.4.12.tar.gz
+$ cd zookeeper-3.4.6
+$ mkdir data
+$ vi conf/zoo.cfg
+
+tickTime = 2000
+dataDir = [/path..]/zookeeper/data
+clientPort = 2181
+initLimit = 5
+syncLimit = 2
+
+$ bin/zkServer.sh start
+$ bin/zkCli.sh
+$ bin/zkServer.sh stop
+
